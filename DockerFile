@@ -14,7 +14,8 @@ RUN dpkg --add-architecture i386 && \
 
 WORKDIR /voyagers_server
 
-COPY ./start.sh /start.sh
+COPY ./config/start.sh /start.sh
+COPY ./config/CustomGameUserSettings.ini /CustomGameUserSettings.ini
 
 # Ports
 EXPOSE 27700/udp
