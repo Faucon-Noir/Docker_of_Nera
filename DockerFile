@@ -3,50 +3,26 @@
 # Non-commercial Docker image (PolyForm Noncommercial License 1.0.0)
 # ============================================================
 
-FROM debian:12
+FROM steamcmd/steamcmd:debian-12
 
-ENV DEBIAN_FRONTEND=noninteractive
+RUN dpkg --add-architecture i386 && \
+    apt update && \
+    apt install -y wine64 xvfb && \
+    apt clean autoclean && \
+    apt autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
 
-# Ajout des architectures et des dépôts nécessaires
-RUN dpkg --add-architecture i386 \
-    && apt update \
-    && apt install -y --no-install-recommends wget curl ca-certificates locales gnupg \
-    # Ajout du dépôt WineHQ
-    && wget -nc https://dl.winehq.org/wine-builds/winehq.key \
-    && apt-key add winehq.key \
-    && echo "deb https://dl.winehq.org/wine-builds/debian/ bookworm main" > /etc/apt/sources.list.d/winehq.list \
-    # Ajout du dépôt contrib/non-free pour steamcmd
-    && echo "deb http://deb.debian.org/debian/ bookworm main contrib non-free" > /etc/apt/sources.list.d/contrib.list \
-    && apt update \
-    && apt install -y --no-install-recommends \
-        wine64 wine32 wine-staging \
-        xvfb \
-        steamcmd \
-    && rm -rf /var/lib/apt/lists/*
+WORKDIR /voyagers_server
 
-# Variables d'environnement
-ENV STEAMCMDDIR="/steamcmd"
-ENV STEAMAPPID="3937860"
-ENV STEAMAPPDIR="/voyagers_server"
-ENV WINEPREFIX="/wineprefix"
-
-RUN mkdir -p $STEAMCMDDIR $STEAMAPPDIR $WINEPREFIX
-
-# Installation du serveur dédié
-RUN steamcmd +login anonymous +force_install_dir ${STEAMAPPDIR} +app_update ${STEAMAPPID} validate +quit
-
-# Copie du script de démarrage
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
+COPY ./start.sh /start.sh
 
 # Ports
 EXPOSE 27700/udp
 EXPOSE 27800/udp
 
 # Métadonnées
-LABEL maintainer="Athéna <ton@email>"
 LABEL license="PolyForm Noncommercial License 1.0.0"
-LABEL copyright="(c) 2025 TonNom"
+LABEL copyright="(c) 2025 Athena"
 
-WORKDIR $STEAMAPPDIR
-ENTRYPOINT ["/start.sh"]
+
+ENTRYPOINT ["bash", "/start.sh"]

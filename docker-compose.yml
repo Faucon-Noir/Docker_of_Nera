@@ -1,8 +1,6 @@
-version: "3.9"
-
 services:
   voyagers-server:
-    image: athenadock/docker-of-nera:latest
+    image: athenamirage/docker-of-nera:latest
     container_name: docker-of-nera
     restart: "no"
     environment:
@@ -24,4 +22,4 @@ services:
     labels:
       org.opencontainers.image.title: "Voyagers of Nera Dedicated Server (Community Edition)"
       org.opencontainers.image.license: "PolyForm Noncommercial License 1.0.0"
-      org.opencontainers.image.authors: "Athena <ton@email>"
+      org.opencontainers.image.authors: "Athena"
