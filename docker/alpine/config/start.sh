@@ -1,6 +1,6 @@
 #!/bin/bash
 UPDATE_STAMP="/voyagers_server/.last_update"
-INSTALL_DIR="/voyagers_server"
+INSTALL_DIR="/voyagers_server/docker_of_nera"
 APP_ID=3937860
 LOG_FILE="/voyagers_server/wine.log"
 
@@ -14,14 +14,10 @@ fi
 
 echo "Copying CustomGameUserSettings.ini..."
 # Remplace le fichier CustomGameUserSettings.ini
-mkdir -p "$INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig"
-# cp /setting.ini "$INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig/CustomGameUserSettings.ini"
-cp /server.ini "$INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig/CustomHostServerUserSettings.ini"
-ls $INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig
+cp /CustomGameUserSettings.ini "$INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig/CustomGameUserSettings.ini"
 
 # Launch wine server with logging
 echo "Démarrage du serveur..."
-xvfb-run wine $INSTALL_DIR/BoatGame/Binaries/Win64/BoatGameServer-Win64-Shipping.exe 
-# "$@" 2>&1 | while IFS= read -r line; do
-    # echo "$(date '+%Y-%m-%d %H:%M:%S') $line" >> "$LOG_FILE"
+xvfb-run wine $INSTALL_DIR/BoatGame/Binaries/Win64/BoatGameServer-Win64-Shipping.exe "$@" 2>&1 | while IFS= read -r line; do
+    echo "$(date '+%Y-%m-%d %H:%M:%S') $line" >> "$LOG_FILE"
 done

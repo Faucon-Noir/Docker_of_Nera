@@ -22,8 +22,7 @@ RUN rm -rf /var/lib/apt/lists/*
 WORKDIR /voyagers_server
 
 COPY ./config/start.sh /start.sh
-COPY ./config/setting.ini /setting.ini
-COPY ./config/server.ini /server.ini
+COPY ./config/CustomGameUserSettings.ini /CustomGameUserSettings.ini
 
 # Convert Windows CRLF to LF and make start script executable
 RUN sed -i 's/\r$//' /start.sh && chmod +x /start.sh
@@ -35,7 +34,7 @@ EXPOSE 27015/tcp 27015/udp
 # Metadata
 LABEL base.image="steamcmd/steamcmd:debian-12"
 LABEL maintainer="Athena"
-LABEL version="0.1.8"
+LABEL version="0.1.1"
 LABEL license="PolyForm Noncommercial License 1.0.0"
 LABEL copyright="(c) 2025 Athena"
 

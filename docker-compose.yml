@@ -1,13 +1,13 @@
 services:
   voyagers-server:
-    image: athenamirage/docker-of-nera:latest
+    image: athenadock/docker-of-nera:0.1.8
     container_name: docker-of-nera
-    restart: "no"
+    restart: "always"
     environment:
       - WINEDEBUG=-all
       - WINEPREFIX=/wineprefix
     volumes:
-      - ./data:/voyagers_server/BoatGame/Saved
+      - "./data:/voyagers_server/BoatGame/"
     ports:
       - "7780:7780/udp"
       - "7780:7780/tcp"

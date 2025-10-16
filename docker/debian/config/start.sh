@@ -14,14 +14,11 @@ fi
 
 echo "Copying CustomGameUserSettings.ini..."
 # Remplace le fichier CustomGameUserSettings.ini
-mkdir -p "$INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig"
-# cp /setting.ini "$INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig/CustomGameUserSettings.ini"
-cp /server.ini "$INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig/CustomHostServerUserSettings.ini"
-ls $INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig
+cp /CustomGameUserSettings.ini "$INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig/CustomGameUserSettings.ini"
+ls $INSTALL_DIR
 
 # Launch wine server with logging
-echo "Démarrage du serveur..."
-xvfb-run wine $INSTALL_DIR/BoatGame/Binaries/Win64/BoatGameServer-Win64-Shipping.exe 
-# "$@" 2>&1 | while IFS= read -r line; do
-    # echo "$(date '+%Y-%m-%d %H:%M:%S') $line" >> "$LOG_FILE"
-done
+# echo "Démarrage du serveur..."
+# xvfb-run wine $INSTALL_DIR/BoatGame/Binaries/Win64/BoatGameServer-Win64-Shipping.exe "$@" 2>&1 | while IFS= read -r line; do
+#     echo "$(date '+%Y-%m-%d %H:%M:%S') $line" >> "$LOG_FILE"
+# done

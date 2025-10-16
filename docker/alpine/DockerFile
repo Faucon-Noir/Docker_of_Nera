@@ -3,30 +3,20 @@
 # Non-commercial Docker image (PolyForm Noncommercial License 1.0.0)
 # ============================================================
 
-FROM steamcmd/steamcmd:debian-12
-
-# Install i386 architecture
-RUN dpkg --add-architecture i386
-RUN apt update
+FROM steamcmd/steamcmd:alpine-3
 
 # Install dependencies.
-RUN apt install -y wine64
-RUN apt install -y xvfb
+RUN apk update
+RUN apk add  wine xvfb --no-cache
 
 #Cleanup
-RUN apt clean autoclean
-RUN apt autoremove -y
-RUN rm -rf /var/lib/apt/lists/*
+RUN rm -rf /var/lib/apk/lists/*
 
 # Setup environment
 WORKDIR /voyagers_server
 
 COPY ./config/start.sh /start.sh
-COPY ./config/setting.ini /setting.ini
-COPY ./config/server.ini /server.ini
-
-# Convert Windows CRLF to LF and make start script executable
-RUN sed -i 's/\r$//' /start.sh && chmod +x /start.sh
+COPY ./config/CustomGameUserSettings.ini /CustomGameUserSettings.ini
 
 # Ports
 EXPOSE 7780/tcp 7780/udp
@@ -35,9 +25,8 @@ EXPOSE 27015/tcp 27015/udp
 # Metadata
 LABEL base.image="steamcmd/steamcmd:debian-12"
 LABEL maintainer="Athena"
-LABEL version="0.1.8"
+LABEL version="0.1.1"
 LABEL license="PolyForm Noncommercial License 1.0.0"
 LABEL copyright="(c) 2025 Athena"
-
 
 ENTRYPOINT ["bash", "/start.sh"]
