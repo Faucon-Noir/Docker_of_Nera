@@ -18,10 +18,13 @@ COPY ./config/start.sh /start.sh
 COPY ./config/CustomGameUserSettings.ini /CustomGameUserSettings.ini
 
 # Ports
-EXPOSE 27700/udp
-EXPOSE 27800/udp
+EXPOSE 7780/tcp 7780/udp
+EXPOSE 27015/tcp 27015/udp
 
-# Métadonnées
+# Metadata
+LABEL base.image="steamcmd/steamcmd:debian-12"
+LABEL maintainer="Athena"
+LABEL version="0.1.0"
 LABEL license="PolyForm Noncommercial License 1.0.0"
 LABEL copyright="(c) 2025 Athena"
 

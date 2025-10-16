@@ -1,6 +1,12 @@
 # TODO LIST
 
-- A front to allow anyone with credentials to login then start/shutdown the server
-- An auto shutdown after 5 minutes without a client connexion
+## Top Priority
+
+- Publish the image on dockerhub
+- Check if the compose file works fine
+- Add data persistance
+
+## Bonus
+- A front to allow anyone with credentials to login then start/shutdown the server (Checkout SSM repo)
+- An auto shutdown after 5 minutes without a client connexion (investigate feasability)
 - An auto backup system triggered just before the server shutdown
-- Fix the docker file wich for now have build issues when starting
