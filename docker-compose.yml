@@ -1,19 +1,17 @@
 services:
   voyagers-server:
-    image: athenadock/docker-of-nera:0.1.8
+    image: athenadock/docker-of-nera:0.1.82
     container_name: docker-of-nera
     restart: "always"
     environment:
       - WINEDEBUG=-all
       - WINEPREFIX=/wineprefix
     volumes:
-      - "./data:/voyagers_server/BoatGame/"
+      - "./data:/voyagers_server/BoatGame/Saved"
     ports:
       - "7780:7780/udp"
       - "7780:7780/tcp"
       - "27015:27015/udp"
-    networks:
-      - voyagers-server
     deploy:
       resources:
         limits:
@@ -26,6 +24,3 @@ services:
       org.opencontainers.image.title: "Voyagers of Nera Dedicated Server (Community Edition)"
       org.opencontainers.image.license: "PolyForm Noncommercial License 1.0.0"
       org.opencontainers.image.authors: "Athena"
-networks:
-    voyagers-server:
-      driver: bridge
