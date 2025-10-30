@@ -2,11 +2,12 @@
 
 ## Top Priority
 
-- Publish the image on dockerhub
-- Check if the compose file works fine
-- Add data persistance
+- Optimize Docker files
+- Get rid of xvfb package if possible
+- Make the shell script fully autonomous (auto-install steamcmd if missing)
 
-## Bonus
-- A front to allow anyone with credentials to login then start/shutdown the server (Checkout SSM repo)
+## Secondary
+
+- A better readme for setup 
 - An auto shutdown after 5 minutes without a client connexion (investigate feasability)
-- An auto backup system triggered just before the server shutdown
+- An auto backup system triggered just before the server shutdown (in addition of the save-on-leave feature)
