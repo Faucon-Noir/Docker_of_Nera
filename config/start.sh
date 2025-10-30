@@ -13,7 +13,7 @@ if [ ! -f "$UPDATE_STAMP" ] || [ $(( ( $(date +%s) - $(stat -c %Y "$UPDATE_STAMP
 fi
 
 echo "Copying CustomGameUserSettings.ini..."
-# Remplace le fichier CustomGameUserSettings.ini
+# Replace the CustomGameUserSettings.ini file
 mkdir -p "$INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig"
 # cp /setting.ini "$INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig/CustomGameUserSettings.ini"
 cp /server.ini "$INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig/CustomHostServerUserSettings.ini"
@@ -24,4 +24,4 @@ echo "Démarrage du serveur..."
 xvfb-run wine $INSTALL_DIR/BoatGame/Binaries/Win64/BoatGameServer-Win64-Shipping.exe 
 # "$@" 2>&1 | while IFS= read -r line; do
     # echo "$(date '+%Y-%m-%d %H:%M:%S') $line" >> "$LOG_FILE"
-done
+# done

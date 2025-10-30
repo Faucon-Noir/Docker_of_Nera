@@ -29,13 +29,13 @@ COPY ./config/server.ini /server.ini
 RUN sed -i 's/\r$//' /start.sh && chmod +x /start.sh
 
 # Ports
-EXPOSE 7780/tcp 7780/udp
-EXPOSE 27015/tcp 27015/udp
+EXPOSE 7777/tcp 7777/udp
+EXPOSE 7778/tcp 7778/udp
 
 # Metadata
 LABEL base.image="steamcmd/steamcmd:debian-12"
 LABEL maintainer="Athena"
-LABEL version="0.1.8"
+LABEL version="0.1.83"
 LABEL license="PolyForm Noncommercial License 1.0.0"
 LABEL copyright="(c) 2025 Athena"
 
