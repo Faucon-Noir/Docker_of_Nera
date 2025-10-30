@@ -1,5 +1,5 @@
 services:
-  voyagers-server:
+  docker-of-nera:
     image: athenadock/docker-of-nera:0.1.82
     container_name: docker-of-nera
     restart: "always"
