@@ -11,25 +11,6 @@ This project provides a **Docker image** to run the _Voyagers of Nera_ dedicated
 ## 🚀 Quick Start (Docker Compose)
 
 Clone this repository or copy the `docker-compose.yml` file.  
-Create a `.env` file with the following content. It will define the maximum CPU and RAM usage:
-
-```env
-# Sufficient enough for 1-4 players
-MAX_CPUS=2.0
-MAX_MEMORY=8G
-```
-
-I recommend to let at least 1 CPU and 2G of RAM for Docker and the OS.  
-You can also define the minimum expected spec such as:
-
-```env
-# Minimum ressources required - may be unstable, please consider using at least 4G of RAM
-RESERVED_CPUS=1.0
-RESERVED_MEMORY=2G
-```
-
-You will need at least 1 CPU and 2G of RAM for the game server
-
 Then start the server:
 
 ```bash
@@ -54,27 +35,18 @@ Reset everything (delete saved data):
 docker compose down -v
 ```
 
-## 🧱 Requirements
-
-| Resource | Recommended                | Notes                          |
-| -------- | -------------------------- | ------------------------------ |
-| CPU      | 2 vCPU (1 reserved)        | Game logic + Wine runtime      |
-| RAM      | 6 GB (2 GB minimum)        | Stable for 1–4 players         |
-| Storage  | 10–20 GB SSD               | For SteamCMD + updates + saves |
-| Network  | 1–5 Mbps                   | Mostly UDP traffic             |
-| OS       | Debian 12+ / Ubuntu 22.04+ | Tested base image              |
-
 ## 📂 Persistent Data
 
-All server saves and configuration files are stored under:
+All saves and configuration files are stored under:
 
 ```
-./data/BoatGame/Saved/PersistedData/CustomConfig/
+./docker-of-nera/
 ```
 
 Mounting this directory allows you to:
 
 - Keep game settings and save data between restarts
+- Keep and update the server files in one place
 - Back up or version your configs easily
 - Share preconfigured servers with the community
 
@@ -96,7 +68,7 @@ You may **not**:
 
 ## ❤️ Community Use
 
-This project exists for the community of _Voyagers of Nera_ players who want to self-host their servers on Linux.  
+This project exists for the community of _Voyagers of Nera_ players who want to self-host their servers on *almost* everything that run Linux or Docker.  
 Feel free to contribute fixes, improvements, or share your experience in running it!
 
 Pull requests and feedback are welcome.

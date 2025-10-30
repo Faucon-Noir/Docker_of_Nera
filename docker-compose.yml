@@ -1,27 +1,35 @@
-version: "3.9"
-
 services:
-  voyagers-server:
-    image: athenadock/docker-of-nera:latest
+  docker-of-nera:
+    image: athenadock/docker-of-nera:0.1.82
     container_name: docker-of-nera
-    restart: "no"
+    restart: "always"
     environment:
       - WINEDEBUG=-all
       - WINEPREFIX=/wineprefix
     volumes:
-      - ./data:/voyagers_server/BoatGame/Saved
+      - "./docker-of-nera:/dedicated-server"
+      - "./docker-of-nera:/saved/BoatGame/Saved"
+      - "./docker-of-nera:/config/BoatGame/Saved/PersistedData/CustomConfig"
     ports:
-      - "27700:27700/udp"
-      - "27800:27800/udp"
-    deploy:
-      resources:
-        limits:
-          cpus: "${MAX_CPUS:-2.0}"
-          memory: "${MAX_MEMORY:-6G}"
-        reservations:
-          cpus: "${RESERVED_CPUS:-1.0}"
-          memory: "${RESERVED_MEMORY:-2G}"
+      - "7777:7777/udp"
+      - "7777:7777/tcp"
+      - "7778:7778/udp"
+      - "7778:7778/tcp"
+    networks:
+      - docker-of-nera
+      # deploy:
+      # resources:
+      #   limits:
+      #     cpus: "${MAX_CPUS:-2.0}"
+      #     memory: "${MAX_MEMORY:-6G}"
+      #   reservations:
+      #     cpus: "${RESERVED_CPUS:-1.0}"
+      #     memory: "${RESERVED_MEMORY:-2G}"
     labels:
       org.opencontainers.image.title: "Voyagers of Nera Dedicated Server (Community Edition)"
       org.opencontainers.image.license: "PolyForm Noncommercial License 1.0.0"
-      org.opencontainers.image.authors: "Athena <ton@email>"
+      org.opencontainers.image.authors: "Athena"
+
+# networks:
+#   docker-of-nera:
+#     driver: bridge
