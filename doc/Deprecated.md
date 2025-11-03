@@ -34,4 +34,3 @@ You will need at least 1 CPU and 2G of RAM for the game server
 | RAM      | 6 GB (2 GB minimum) | Stable for 1–4 players         |
 | Storage  | 10–20 GB SSD        | For SteamCMD + updates + saves |
 | Network  | 1–5 Mbps            | Mostly UDP traffic             |
-| OS       | Debian 12+          | Tested base image              |

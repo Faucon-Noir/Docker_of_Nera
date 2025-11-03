@@ -25,7 +25,6 @@ echo "Copying CustomGameUserSettings.ini..."
 mkdir -p "$INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig"
 cp /setting.ini "$INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig/CustomGameUserSettings.ini"
 cp /server.ini "$INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig/CustomHostServerUserSettings.ini"
-ls $INSTALL_DIR/BoatGame/Saved/PersistedData/CustomConfig
 
 # Launch wine server with logging
 echo "Démarrage du serveur..."
