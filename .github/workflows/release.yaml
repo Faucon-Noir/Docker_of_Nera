@@ -1,0 +1,50 @@
+name: Latest Release
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  build-latest:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.base.ref == 'dev'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Check Version Change
+        id: version
+        run: |
+          set -euo pipefail
+          VERSION=$(grep -E '^LABEL version=' DockerFile | sed -E 's/^LABEL version="([^"]+)".*/\1/')
+          if [ -z "${VERSION}"]; then
+          echo "LABEL version not found in DockerFile" >> "$GITHUB_OUTPUT"
+          exit 1
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Latest Image
+        uses: docker/build-push-action@v4
+        with:
+          context: DockerFile
+          push: true
+          tags: |
+            ${{ vars.DOCKERHUB_REPO }}:latest,
+            ${{ vars.DOCKERHUB_REPO }}:${{steps.version.outputs.version}}
