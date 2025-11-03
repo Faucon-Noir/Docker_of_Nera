@@ -24,16 +24,18 @@ jobs:
         run: |
           set -euo pipefail
           FILE="DockerFile"
-
-          if ["${{github.event_name}}" = "pull_request"]; then
-          git fetch origin ${{github.base_ref}} --depth=1
-          DIFF_REF="origin/${{github.base_ref}}"
+          EVENT_NAME="${{ github.event_name }}"
+          BASE_REF="${{ github.base_ref }}"
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            git fetch origin "$BASE_REF" --depth=1
+            DIFF_REF="origin/$BASE_REF"
           else
-          DIFF_REF="HEAD^"
+            DIFF_REF="HEAD^"
           fi
-          if git diff"$DIFF_REF" HEAD -- "$FILE" | grep -q 'LABEL version'; then
-          VERSION=$(grep -E '^LABEL version='"$FILE"| sed -E 's/^LABEL version="([^"]+)".*/\1/')
+          if git diff "$DIFF_REF" HEAD -- "$FILE" | grep -q 'LABEL version'; then
+            VERSION=$(grep -E '^LABEL version=' "$FILE" | sed -E 's/^LABEL version="([^"]+)".*/\1/')
             echo "Version changed to $VERSION"
+            echo "changed=true" >> $GITHUB_OUTPUT
             echo "version=$VERSION" >> $GITHUB_OUTPUT
           else
             echo "changed=false" >> $GITHUB_OUTPUT
