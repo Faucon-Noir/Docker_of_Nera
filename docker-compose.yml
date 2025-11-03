@@ -1,6 +1,6 @@
 services:
   docker-of-nera:
-    image: athenadock/docker-of-nera:0.1.83
+    image: athenadock/docker-of-nera:0.1.84
     container_name: docker-of-nera
     restart: "always"
     environment:

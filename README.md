@@ -39,7 +39,7 @@ docker compose down -v
 
 All saves and configuration files are stored under:
 
-```
+```bash
 ./docker-of-nera/
 ```
 
@@ -68,7 +68,7 @@ You may **not**:
 
 ## ❤️ Community Use
 
-This project exists for the community of _Voyagers of Nera_ players who want to self-host their servers on *almost* everything that run Linux or Docker.  
+This project exists for the community of _Voyagers of Nera_ players who want to self-host their servers on _almost_ everything that run Linux or Docker.  
 Feel free to contribute fixes, improvements, or share your experience in running it!
 
 Pull requests and feedback are welcome.
