@@ -1,6 +1,6 @@
 services:
   docker-of-nera:
-    image: athenadock/docker-of-nera:0.1.82
+    image: athenadock/docker-of-nera:0.1.83
     container_name: docker-of-nera
     restart: "always"
     environment:
@@ -26,7 +26,7 @@ services:
       #     cpus: "${RESERVED_CPUS:-1.0}"
       #     memory: "${RESERVED_MEMORY:-2G}"
     labels:
-      org.opencontainers.image.title: "Voyagers of Nera Dedicated Server (Community Edition)"
+      org.opencontainers.image.title: "Docker of Nera (Community Edition)"
       org.opencontainers.image.license: "PolyForm Noncommercial License 1.0.0"
       org.opencontainers.image.authors: "Athena"
 
