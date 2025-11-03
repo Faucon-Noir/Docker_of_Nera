@@ -1,14 +1,14 @@
 # 🐳 Voyagers of Nera - Dedicated Server (Community Docker Image)
 
 ![License: PolyForm Noncommercial](https://img.shields.io/badge/License-PolyForm%20NonCommercial-blue.svg)
-![Docker Pulls](https://img.shields.io/docker/pulls/tonpseudo/voyagers-dedicated)
+![Docker Pulls](https://img.shields.io/docker/pulls/athenadock/docker-of-nera)
 
 This project provides a **Docker image** to run the _Voyagers of Nera_ dedicated server (Steam App ID `3937860`) on Linux using **Wine** and **SteamCMD**.
 
 > ⚠️ This image is licensed for **non-commercial community use only** under the **PolyForm Noncommercial License 1.0.0**.
 > Commercial hosting, resale, or integration into paid services is **strictly prohibited**.
 
-## 🚀 Quick Start (Docker Compose)
+## 🐳 Quick Start (Docker Compose)
 
 Clone this repository or copy the `docker-compose.yml` file.  
 Then start the server:
@@ -35,11 +35,11 @@ Reset everything (delete saved data):
 docker compose down -v
 ```
 
-## 📂 Persistent Data
+### 📂 Persistent Data
 
 All saves and configuration files are stored under:
 
-```
+```bash
 ./docker-of-nera/
 ```
 
@@ -49,6 +49,14 @@ Mounting this directory allows you to:
 - Keep and update the server files in one place
 - Back up or version your configs easily
 - Share preconfigured servers with the community
+
+## 🚀Quick Start (Standalone)
+
+Want to play without docker ?
+Easy  
+Just copy the content of `start.sh` in a shell file and execute it  
+It will install everything you need  
+To avoid permission isssues, execute it with sudo
 
 ## ⚖️ License
 
@@ -68,7 +76,7 @@ You may **not**:
 
 ## ❤️ Community Use
 
-This project exists for the community of _Voyagers of Nera_ players who want to self-host their servers on *almost* everything that run Linux or Docker.  
+This project exists for the community of _Voyagers of Nera_ players who want to self-host their servers on _almost_ everything that run Linux or Docker.  
 Feel free to contribute fixes, improvements, or share your experience in running it!
 
 Pull requests and feedback are welcome.

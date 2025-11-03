@@ -1,0 +1,68 @@
+name: Latest Version
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  build-latest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Check Version Change
+        id: version
+        run: |
+          set -euo pipefail
+          FILE="DockerFile"
+          EVENT_NAME="${{ github.event_name }}"
+          BASE_REF="${{ github.base_ref }}"
+
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            git fetch origin "$BASE_REF" --depth=1
+            DIFF_REF="origin/$BASE_REF"
+          else
+            if git rev-parse HEAD^ >/dev/null 2>&1; then
+              DIFF_REF="HEAD^"
+            else
+              DIFF_REF=""
+            fi
+          fi
+
+          if [ -n "$DIFF_REF" ] && git diff "$DIFF_REF" HEAD -- "$FILE" | grep -q 'LABEL version'; then
+            VERSION=$(grep -E '^LABEL version=' "$FILE" | sed -E 's/^LABEL version="([^"]+)".*/\1/')
+            echo "Version changed to $VERSION"
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Versioned Image
+        if: steps.version.outputs.changed =='true'
+        uses: docker/build-push-action@v5
+        with:
+          context: DockerFile
+          push: true
+          tags: ${{ vars.DOCKERHUB_REPO }}:${{steps.version.outputs.version}}

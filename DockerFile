@@ -35,7 +35,7 @@ EXPOSE 7778/tcp 7778/udp
 # Metadata
 LABEL base.image="steamcmd/steamcmd:debian-12"
 LABEL maintainer="Athena"
-LABEL version="0.1.83"
+LABEL version="0.1.84"
 LABEL license="PolyForm Noncommercial License 1.0.0"
 LABEL copyright="(c) 2025 Athena"
 
