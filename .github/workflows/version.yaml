@@ -26,13 +26,19 @@ jobs:
           FILE="DockerFile"
           EVENT_NAME="${{ github.event_name }}"
           BASE_REF="${{ github.base_ref }}"
+
           if [ "$EVENT_NAME" = "pull_request" ]; then
             git fetch origin "$BASE_REF" --depth=1
             DIFF_REF="origin/$BASE_REF"
           else
-            DIFF_REF="HEAD^"
+            if git rev-parse HEAD^ >/dev/null 2>&1; then
+              DIFF_REF="HEAD^"
+            else
+              DIFF_REF=""
+            fi
           fi
-          if git diff "$DIFF_REF" HEAD -- "$FILE" | grep -q 'LABEL version'; then
+
+          if [ -n "$DIFF_REF" ] && git diff "$DIFF_REF" HEAD -- "$FILE" | grep -q 'LABEL version'; then
             VERSION=$(grep -E '^LABEL version=' "$FILE" | sed -E 's/^LABEL version="([^"]+)".*/\1/')
             echo "Version changed to $VERSION"
             echo "changed=true" >> $GITHUB_OUTPUT
