@@ -3,7 +3,7 @@ name: Latest Release
 on:
   pull_request:
     branches:
-      - main
+      - dev
     types:
       - opened
       - synchronize
@@ -21,12 +21,17 @@ jobs:
         id: version
         run: |
           set -euo pipefail
-          VERSION=$(grep -E '^LABEL version=' DockerFile | sed -E 's/^LABEL version="([^"]+)".*/\1/')
-          if [ -z "${VERSION}"]; then
-          echo "LABEL version not found in DockerFile" >> "$GITHUB_OUTPUT"
-          exit 1
+          FILE="DockerFile"
+          if [ ! -f "$FILE" ]; then
+            echo "Docker file $FILE not found" >&2
+            exit 1
           fi
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          VERSION=$(grep -E '^LABEL version=' "$FILE" | sed -E 's/^LABEL version="([^"]+)".*/\1/' || true)
+          if [ -z "${VERSION}" ]; then
+            echo "LABEL version not found in $FILE" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -43,8 +48,9 @@ jobs:
       - name: Build and Push Latest Image
         uses: docker/build-push-action@v4
         with:
-          context: DockerFile
+          context: .
+          file: ./DockerFile
           push: true
           tags: |
-            ${{ vars.DOCKERHUB_REPO }}:latest,
-            ${{ vars.DOCKERHUB_REPO }}:${{steps.version.outputs.version}}
+            ${{ vars.DOCKERHUB_REPO }}:${{ steps.version.outputs.version }}
+             ${{ vars.DOCKERHUB_REPO }}:latest

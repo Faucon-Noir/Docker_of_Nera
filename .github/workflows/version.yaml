@@ -60,9 +60,11 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and Push Versioned Image
-        if: steps.version.outputs.changed =='true'
-        uses: docker/build-push-action@v5
+        if: steps.version.outputs.changed == 'true'
+        uses: docker/build-push-action@v4
         with:
-          context: DockerFile
+          context: .
+          file: ./DockerFile
           push: true
-          tags: ${{ vars.DOCKERHUB_REPO }}:${{steps.version.outputs.version}}
+          tags: |
+            ${{ vars.DOCKERHUB_REPO }}:${{ steps.version.outputs.version }}
